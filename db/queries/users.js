@@ -20,6 +20,13 @@ export async function createUser(username, password) {
   return user;
 }
 
+/**
+ * Get a user with their login credentials
+ * @param {string} username - Their username
+ * @param {string} password - Their unencrypted password
+ * @returns the user with that username and password
+ * @returns null, if the credentials are invalid
+ */
 export async function getUserByLogin(username, password) {
   const sql = `
     SELECT * FROM users
