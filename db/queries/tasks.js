@@ -32,3 +32,18 @@ export async function getTasksByUser(userId) {
   const { rows: tasks } = await db.query(sql, [userId]);
   return tasks;
 }
+
+/**
+ * @param {number} id
+ * @returns the task with the given id
+ */
+export async function getTaskById(id) {
+  const sql = `
+    SELECT * FROM tasks
+    WHERE id = $1
+  `;
+  const {
+    rows: [task],
+  } = await db.query(sql, [id]);
+  return task;
+}
