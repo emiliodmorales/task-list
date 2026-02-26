@@ -4,7 +4,12 @@ export default router;
 
 import requireBody from "#middleware/requireBody";
 import requireUser from "#middleware/requireUser";
-import { createTask, getTasksByUser, getTaskById } from "#db/queries/tasks";
+import {
+  createTask,
+  getTasksByUser,
+  getTaskById,
+  updateTask,
+} from "#db/queries/tasks";
 
 router.use(requireUser);
 
@@ -33,4 +38,6 @@ router.param("id", async (req, res, next, id) => {
 
 router.put("/:id", requireBody(["title", "done"]), async (req, res) => {
   const { title, done } = req.body;
+  const task = await updateTask(title, done, req.task.id);
+  res.send(task);
 });
