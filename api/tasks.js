@@ -9,6 +9,7 @@ import {
   getTasksByUser,
   getTaskById,
   updateTask,
+  deleteTask,
 } from "#db/queries/tasks";
 
 router.use(requireUser);
@@ -40,4 +41,9 @@ router.put("/:id", requireBody(["title", "done"]), async (req, res) => {
   const { title, done } = req.body;
   const task = await updateTask(title, done, req.task.id);
   res.send(task);
+});
+
+router.delete("/:id", async (req, res) => {
+  const task = await deleteTask(req.task.id);
+  res.status(204).send(task);
 });
