@@ -47,3 +47,23 @@ export async function getTaskById(id) {
   } = await db.query(sql, [id]);
   return task;
 }
+
+/**
+ * Updates a task
+ * @param {string} title - The new title of the task
+ * @param {boolean} done - The new done status of the task
+ * @param {number} id - The id of the task
+ * @returns the updated task
+ */
+export async function updateTask(title, done, id) {
+  const sql = `
+    UPDATE tasks
+    SET title = $1, done = $2
+    WHERE id = $3
+    RETURNING *
+  `;
+  const {
+    rows: [task],
+  } = await db.query(sql, [title, done, id]);
+  return task;
+}
