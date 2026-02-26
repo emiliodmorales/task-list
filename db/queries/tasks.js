@@ -18,3 +18,17 @@ export async function createTask(title, userId, done) {
   } = await db.query(sql, [title, userId, done]);
   return task;
 }
+
+/**
+ * Gets all tasks owned by the user
+ * @param {number} userId - The id of the user
+ * @returns all tasks owned by the user
+ */
+export async function getTasksByUser(userId) {
+  const sql = `
+    SELECT * FROM tasks
+    WHERE user_id = $1
+  `;
+  const { rows: tasks } = await db.query(sql, [userId]);
+  return tasks;
+}
